@@ -1,0 +1,132 @@
+<html>
+<head>
+	<script src="https://fb.me/react-0.13.1.js"></script>
+	<script src="https://fb.me/JSXTransformer-0.13.1.js"></script>
+	<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet"/>
+	<link href="app.css" rel="stylesheet"/>
+</head>
+<body>
+	<div id="content"></div>
+
+	<script type="text/jsx">
+		// Event table
+		var FilterableEventTable = React.createClass({
+			getInitialState: function() {
+				return { categories: [] };
+			},
+			render: function() {
+				return (
+					<div className="container">
+						<div className="container">
+							<h1>Available Events</h1>
+						</div>
+						<FilterBar />
+						<EventsTable events={this.props.events} categories={this.state.categories} />
+						<div className="container">
+							<footer>&copy; Copyright ACTIVEwinning 2015 - <a href="/" title="Back to home">Back to home</a></footer>
+						</div>
+					</div>
+				);
+			}
+		});
+
+		// Search filters
+		var FilterBar = React.createClass({
+			render: function() {
+				return (
+					<div className="container">
+					<h5>Filter events by category:</h5>
+						<div className="checkbox">
+						  <label>
+						    <input type="checkbox" value="running"/> Running
+						  </label>
+						</div>
+						<div className="checkbox">
+						  <label>
+						    <input type="checkbox" value="swimming"/> Swimming
+						  </label>
+						</div>
+						<div className="checkbox">
+						  <label>
+						    <input type="checkbox" value="tennis"/> Tennis
+						  </label>
+						</div>
+					</div>
+				);
+			}
+		});
+
+		// Results table
+		var EventsTable = React.createClass({
+			render: function() {
+				var rows = [];
+				this.props.events.forEach(function(event) {
+					rows.push(<EventListing name={event.name} category={event.category} />);
+				});
+
+				return (
+					<div className="container">
+						<hr/>
+						{shuffle(rows)}
+						<hr/>
+					</div>
+				);
+			}
+		});
+
+		// Event listing
+		var EventListing = React.createClass({
+			render: function() {
+				var name = this.props.category;
+				name = name.substr(0,1).toUpperCase() + name.substr(1, name.length);
+
+				return (
+					<article className="panel panel-default">
+						<div className="panel-heading">{this.props.name}</div>
+						<div className="panel-body">Category: {name}</div>
+					</article>
+				);
+			}
+		});
+
+		// Events
+		var EVENTS = [
+			{ category: 'running', name: '5K? More Like No K!' },
+			{ category: 'running', name: 'Running Me Down' },
+			{ category: 'running', name: 'Trail Blazing' },
+			{ category: 'swimming', name: '2015 Bangarang Swim Meet' },
+			{ category: 'swimming', name: 'Splish Splash-A-Roo' },
+			{ category: 'tennis', name: 'Oh My Elbow 2015' },
+			{ category: 'tennis', name: 'Great Balls of Fire' },
+			{ category: 'tennis', name: 'Racquet Up' }
+		];
+
+		// Shuffle
+		shuffle = function(array) {
+			var currentIndex = array.length, temporaryValue, randomIndex ;
+
+			// While there remain elements to shuffle...
+			while (0 !== currentIndex) {
+
+			  // Pick a remaining element...
+			  randomIndex = Math.floor(Math.random() * currentIndex);
+			  currentIndex -= 1;
+
+			  // And swap it with the current element.
+			  temporaryValue = array[currentIndex];
+			  array[currentIndex] = array[randomIndex];
+			  array[randomIndex] = temporaryValue;
+			}
+
+			return array;
+		};
+
+
+		// Render
+		React.render(<FilterableEventTable events={EVENTS} />, document.getElementById('content'));
+	</script>
+</body>
+</html>

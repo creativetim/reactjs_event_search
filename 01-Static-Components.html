@@ -1,0 +1,92 @@
+<html>
+<head>
+	<script src="https://fb.me/react-0.13.1.js"></script>
+	<script src="https://fb.me/JSXTransformer-0.13.1.js"></script>
+	<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet"/>
+	<link href="app.css" rel="stylesheet"/>
+</head>
+<body>
+	<div id="content"></div>
+
+	<script type="text/jsx">
+		// Event table
+		var FilterableEventTable = React.createClass({
+			render: function() {
+				return (
+					<div className="container">
+						<div className="container">
+							<h1>Available Events</h1>
+						</div>
+						<FilterBar />
+						<ResultsTable />
+						<div className="container">
+							<footer>&copy; Copyright ACTIVEwinning 2015 - <a href="/" title="Back to home">Back to home</a></footer>
+						</div>
+					</div>
+				);
+			}
+		});
+
+		// Search filters
+		var FilterBar = React.createClass({
+			render: function() {
+				return (
+					<div className="container">
+					<h5>Filter events by category:</h5>
+						<div className="checkbox">
+						  <label>
+						    <input type="checkbox" value="running"/> Running
+						  </label>
+						</div>
+						<div className="checkbox">
+						  <label>
+						    <input type="checkbox" value="swimming"/> Swimming
+						  </label>
+						</div>
+						<div className="checkbox">
+						  <label>
+						    <input type="checkbox" value="tennis"/> Tennis
+						  </label>
+						</div>
+					</div>
+				);
+			}
+		});
+
+		// Results table
+		var ResultsTable = React.createClass({
+			render: function() {
+				return (
+					<div className="container">
+						<hr/>
+						<EventListing name="Bangarang Swim Meet" category="swimming" />
+						<hr/>
+					</div>
+				);
+			}
+		});
+
+		// Event listing
+		var EventListing = React.createClass({
+			render: function() {
+				var name = this.props.category;
+				name = name.substr(0,1).toUpperCase() + name.substr(1, name.length);
+
+				return (
+					<article className="panel panel-default">
+						<div className="panel-heading">{this.props.name}</div>
+						<div className="panel-body">Category: {name}</div>
+					</article>
+				);
+			}
+		});
+
+
+		// Render
+		React.render(<FilterableEventTable />, document.getElementById('content'));
+	</script>
+</body>
+</html>
