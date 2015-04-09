@@ -29,7 +29,7 @@
 						<div className="container">
 							<h1>Available Events</h1>
 						</div>
-						<FilterBar categories={this.state.categories} onUserInput={this.handleUserInput}/>
+						<FilterBar onUserInput={this.handleUserInput}/>
 						<EventsTable events={this.props.events} categories={this.state.categories} />
 						<div className="container">
 							<footer>&copy; Copyright ACTIVEwinning 2015 - <a href="/" title="Back to home">Back to home</a></footer>
